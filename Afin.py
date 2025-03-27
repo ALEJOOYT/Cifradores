@@ -13,9 +13,6 @@ def ModInvertido(a, m):
     return None
 
 def cifrar(palabra, A, B):
-    if math.gcd(A, N) != 1:
-        print(f"El coeficiente A ({A}) no es coprimo con {N}. No se puede cifrar.")
-        return ""
     cifrado = ""
     for letra in palabra:
         if letra in alfabeto:
@@ -28,9 +25,6 @@ def cifrar(palabra, A, B):
 
 def descifrar(palabra, A, B):
     invA = ModInvertido(A, N)
-    if invA is None:
-        print(f"El coeficiente A ({A}) no tiene inverso módulo {N}. No se puede descifrar.")
-        return ""
     descifrado = ""
     for letra in palabra:
         if letra in alfabeto:
@@ -52,6 +46,18 @@ def DecifrarFuerzaBruta(palabra, rango):
                     archivo.write(linea)
                     print(linea, end="")
 
+def obtener_coeficientes():
+    while True:
+        try:
+            A = int(input("Ingrese el coeficiente A: "))
+            if math.gcd(A, N) != 1:
+                print(f"El coeficiente A ({A}) no es coprimo con {N}. Intente nuevamente.")
+                continue
+            B = int(input("Ingrese el coeficiente B: "))
+            return A, B
+        except ValueError:
+            print("Error: Los coeficientes deben ser números enteros. Intente nuevamente.")
+
 def MostrarMenu():
     os.system("cls" if os.name == "nt" else "clear")
     print("=" * 40)
@@ -70,23 +76,15 @@ def main():
 
         if opcion == "1":
             palabra = input("Ingrese la palabra a cifrar: ").upper()
-            try:
-                A = int(input("Ingrese el coeficiente A: "))
-                B = int(input("Ingrese el coeficiente B: "))
-                resultado = cifrar(palabra, A, B)
-                print("Palabra cifrada:", resultado)
-            except ValueError:
-                print("Error: Los coeficientes deben ser números enteros.")
+            A, B = obtener_coeficientes()
+            resultado = cifrar(palabra, A, B)
+            print("Palabra cifrada:", resultado)
 
         elif opcion == "2":
             palabra = input("Ingrese la palabra a descifrar: ").upper()
-            try:
-                A = int(input("Ingrese el coeficiente A: "))
-                B = int(input("Ingrese el coeficiente B: "))
-                resultado = descifrar(palabra, A, B)
-                print("Palabra descifrada:", resultado)
-            except ValueError:
-                print("Error: Los coeficientes deben ser números enteros.")
+            A, B = obtener_coeficientes()
+            resultado = descifrar(palabra, A, B)
+            print("Palabra descifrada:", resultado)
 
         elif opcion == "3":
             palabra = input("Ingrese la palabra a descifrar: ").upper()
