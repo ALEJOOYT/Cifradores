@@ -46,7 +46,7 @@ def DecifrarFuerzaBruta(palabra, rango):
                     archivo.write(linea)
                     print(linea, end="")
 
-def obtener_coeficientes():
+def ObtenerCoeficientes():
     while True:
         try:
             A = int(input("Ingrese el coeficiente A: "))
@@ -59,7 +59,7 @@ def obtener_coeficientes():
             print("Error: Los coeficientes deben ser números enteros. Intente nuevamente.")
 
 def MostrarMenu():
-    os.system("cls" if os.name == "nt" else "clear")
+    # os.system("cls" if os.name == "nt" else "clear")
     print("=" * 40)
     print("  BIENVENIDO AL SISTEMA DE CIFRADO AFIN")
     print("=" * 40)
@@ -76,13 +76,13 @@ def main():
 
         if opcion == "1":
             palabra = input("Ingrese la palabra a cifrar: ").upper()
-            A, B = obtener_coeficientes()
+            A, B = ObtenerCoeficientes()
             resultado = cifrar(palabra, A, B)
             print("Palabra cifrada:", resultado)
 
         elif opcion == "2":
             palabra = input("Ingrese la palabra a descifrar: ").upper()
-            A, B = obtener_coeficientes()
+            A, B = ObtenerCoeficientes()
             resultado = descifrar(palabra, A, B)
             print("Palabra descifrada:", resultado)
 
