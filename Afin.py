@@ -2,11 +2,10 @@ import os
 import string
 import math
 
-alfabeto = list(string.ascii_uppercase)  # Alfabeto dinámico
-N = len(alfabeto)  # Tamaño del alfabeto
+alfabeto = list(string.ascii_uppercase)
+N = len(alfabeto)
 
 def mod_invertido(a, m):
-    """ Calcula el inverso modular de a módulo m si existe. """
     a = a % m
     for i in range(1, m):
         if (a * i) % m == 1:
@@ -42,12 +41,16 @@ def descifrar(palabra, A, B):
             descifrado += letra
     return descifrado
 
-def descifrar_fuerza_bruta(palabra):
+def descifrar_fuerza_bruta(palabra, rango):
     print("Iniciando descifrado por fuerza bruta...\n")
-    for A in range(1, N):
-        if mod_invertido(A, N):
-            for B in range(N):
-                print(f"A = {A}, B = {B}, descifrado = {descifrar(palabra, A, B)}")
+    with open("posiblesDecifrados.txt", "w") as archivo:
+        for A in range(1, rango + 1):
+            if mod_invertido(A, N):
+                for B in range(rango + 1):
+                    resultado = descifrar(palabra, A, B)
+                    linea = f"A = {A}, B = {B}, descifrado = {resultado}\n"
+                    archivo.write(linea)
+                    print(linea, end="")
 
 def mostrar_menu():
     os.system("cls" if os.name == "nt" else "clear")
@@ -87,7 +90,9 @@ def main():
 
         elif opcion == "3":
             palabra = input("Ingrese la palabra a descifrar: ").upper()
-            descifrar_fuerza_bruta(palabra)
+            rango = int(input("Ingrese el rango de búsqueda: "))
+            descifrar_fuerza_bruta(palabra, rango)
+            print("Los posibles descifrados se han guardado en 'posiblesDecifrados.txt'.")
 
         elif opcion == "4":
             print("Saliendo del programa...\n")
